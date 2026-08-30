@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>AA BILLING SYSTEM</title>
+
+<style>
+
+/* =========================
+   CORE
+========================= */
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+background:#050505;
+color:#eee;
+font-family:Arial,Helvetica,sans-serif;
+font-size:13px;
+}
+
+button,
+input,
+select,
+textarea{
+font-family:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+
+/* =========================
+   GOLD ANIMATION
+========================= */
+
+@keyframes goldShine{
+0%{background-position:-200% 0}
+100%{background-position:200% 0}
+}
+
+@keyframes glow{
+0%,100%{box-shadow:0 0 4px rgba(231,201,87,.15)}
+50%{box-shadow:0 0 15px rgba(231,201,87,.35)}
+}
+
+@keyframes shine{
+0%{left:-120%}
+60%,100%{left:140%}
+}
+
+
+/* =========================
+   HEADER / LOGO
+========================= */
+
+header{
+position:sticky;
+top:0;
+z-index:100;
+background:rgba(7,7,7,.96);
+border-bottom:1px solid #4d3d10;
+padding:12px;
+backdrop-filter:blur(8px);
+}
+
+.header{
+max-width:1000px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+}
+
+.logo{
+position:relative;
+overflow:hidden;
+font-size:18px;
+font-weight:900;
+letter-spacing:2px;
+background:linear-gradient(
+90deg,
+#9d771c,
+#fff0a0,
+#c39a2b,
+#fff5b7,
+#9d771c
+);
+background-size:300% 100%;
+-webkit-background-clip:text;
+background-clip:text;
+color:transparent;
+animation:goldShine 5s linear infinite;
+}
+
+.logo:after{
+content:"";
+position:absolute;
+top:-20%;
+left:-120%;
+width:35%;
+height:140%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.85),
+transparent
+);
+transform:skewX(-20deg);
+animation:shine 5s ease-in-out infinite;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+nav{
+display:flex;
+gap:5px;
+overflow-x:auto;
+}
+
+nav button{
+white-space:nowrap;
+padding:8px 11px;
+background:#111;
+color:#aaa;
+border:1px solid #292929;
+border-radius:6px;
+font-size:11px;
+font-weight:bold;
+}
+
+nav button:hover{
+color:#f1d76a;
+border-color:#705919;
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+main{
+max-width:1000px;
+margin:auto;
+padding:14px 10px 75px;
+}
+
+.page{
+display:none;
+animation:pageIn .2s ease;
+}
+
+.page.active{
+display:block;
+}
+
+@keyframes pageIn{
+from{
+opacity:0;
+transform:translateY(5px);
+}
+to{
+opacity:1;
+transform:none;
+}
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+position:relative;
+overflow:hidden;
+padding:24px 20px;
+margin-bottom:12px;
+border-radius:11px;
+border:1px solid #3d3214;
+background:
+radial-gradient(circle at 80% 20%,#211c0b,transparent 35%),
+linear-gradient(135deg,#111,#080808);
+}
+
+.hero:after{
+content:"";
+position:absolute;
+top:0;
+left:-100%;
+width:35%;
+height:100%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,215,80,.12),
+transparent
+);
+transform:skewX(-20deg);
+animation:shine 8s infinite;
+}
+
+.hero h1{
+margin:0 0 6px;
+font-size:28px;
+color:#ead064;
+}
+
+.hero p{
+margin:0;
+color:#777;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card{
+background:#101010;
+border:1px solid #292929;
+border-radius:9px;
+padding:14px;
+margin-bottom:12px;
+animation:glow 6s ease-in-out infinite;
+}
+
+.card h2{
+margin:0 0 12px;
+font-size:16px;
+color:#e7ca59;
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+.stats{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:8px;
+margin-bottom:12px;
+}
+
+.stat{
+background:#0b0b0b;
+border:1px solid #272727;
+border-radius:8px;
+padding:12px;
+}
+
+.stat-title{
+font-size:9px;
+color:#777;
+text-transform:uppercase;
+}
+
+.stat-value{
+margin-top:5px;
+font-size:19px;
+font-weight:bold;
+color:#e5c85c;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+.full{
+grid-column:1/-1;
+}
+
+label{
+display:block;
+font-size:10px;
+font-weight:bold;
+color:#999;
+margin-bottom:4px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+background:#070707;
+border:1px solid #333;
+border-radius:5px;
+color:#fff;
+padding:8px;
+outline:none;
+font-size:12px;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border-color:#b79328;
+box-shadow:0 0 5px rgba(212,174,47,.12);
+}
+
+textarea{
+min-height:55px;
+resize:vertical;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.actions{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:10px;
+}
+
+.btn{
+padding:8px 12px;
+border-radius:6px;
+font-weight:bold;
+font-size:11px;
+border:1px solid #333;
+}
+
+.gold{
+background:linear-gradient(
+100deg,
+#9c751d,
+#f1d96b,
+#b68d25,
+#f5df78,
+#9c751d
+);
+background-size:300% 100%;
+color:#080808;
+border-color:#d9bc52;
+animation:goldShine 5s linear infinite;
+}
+
+.dark{
+background:#181818;
+color:#ddd;
+}
+
+.red{
+background:#321111;
+color:#ff7777;
+border-color:#4b2020;
+}
+
+
+/* =========================
+   ITEMS TABLE
+========================= */
+
+.wrap{
+overflow:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+min-width:650px;
+}
+
+th,
+td{
+border:1px solid #303030;
+padding:5px;
+}
+
+th{
+background:#19150a;
+color:#e4c85b;
+font-size:10px;
+}
+
+td input{
+padding:6px;
+}
+
+.amount{
+color:#e7ca59;
+font-weight:bold;
+white-space:nowrap;
+}
+
+.add{
+margin-top:9px;
+padding:8px 12px;
+border-radius:6px;
+background:#1c1708;
+color:#e7ca59;
+border:1px solid #574715;
+font-weight:bold;
+}
+
+
+/* =========================
+   TOTALS / PAYMENT
+========================= */
+
+.total{
+text-align:right;
+margin-top:10px;
+font-size:18px;
+font-weight:bold;
+color:#e7ca59;
+}
+
+.payment{
+background:#080808;
+border:1px solid #292929;
+border-radius:7px;
+padding:10px;
+margin-top:10px;
+}
+
+.payment-line{
+display:flex;
+justify-content:space-between;
+padding:5px 0;
+}
+
+.paid{
+color:#42d58a;
+}
+
+.pending{
+color:#ff6868;
+}
+
+.partial{
+color:#e6c74f;
+}
+
+
+/* =========================
+   SIGNATURE
+========================= */
+
+.signature{
+height:110px;
+background:white;
+border-radius:6px;
+overflow:hidden;
+}
+
+#signature{
+width:100%;
+height:100%;
+touch-action:none;
+}
+
+
+/* =========================
+   INVOICES
+========================= */
+
+.search{
+display:flex;
+gap:6px;
+margin-bottom:10px;
+}
+
+.search input{
+flex:1;
+}
+
+.invoice{
+background:#080808;
+border:1px solid #292929;
+border-radius:7px;
+padding:11px;
+margin:7px 0;
+transition:.15s;
+}
+
+.invoice:hover{
+border-color:#645116;
+transform:translateY(-1px);
+}
+
+.invoice-name{
+font-weight:bold;
+font-size:14px;
+color:#e6ca5b;
+}
+
+.info{
+font-size:10px;
+color:#777;
+margin-top:4px;
+}
+
+.badge{
+display:inline-block;
+margin-top:6px;
+padding:3px 7px;
+border-radius:20px;
+font-size:9px;
+font-weight:bold;
+}
+
+.badge.paid{
+background:#0c2c1c;
+}
+
+.badge.partial{
+background:#30290d;
+}
+
+.badge.unpaid{
+background:#321010;
+}
+
+.empty{
+padding:30px;
+text-align:center;
+color:#666;
+border:1px dashed #333;
+border-radius:7px;
+}
+
+
+/* =========================
+   DIGITAL CALCULATOR
+========================= */
+
+.calculator{
+max-width:330px;
+margin:auto;
+background:#030303;
+border:1px solid #3d3213;
+border-radius:20px;
+padding:12px;
+}
+
+.display{
+height:90px;
+display:flex;
+align-items:flex-end;
+justify-content:flex-end;
+padding:8px;
+font-size:34px;
+font-weight:bold;
+color:#ead066;
+overflow:hidden;
+white-space:nowrap;
+background:#080808;
+border-radius:13px;
+margin-bottom:9px;
+}
+
+.calc-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:6px;
+}
+
+.calc-grid button{
+height:52px;
+border:1px solid #292929;
+border-radius:50%;
+background:#1a1a1a;
+color:#fff;
+font-size:17px;
+font-weight:bold;
+}
+
+.calc-grid button:active{
+transform:scale(.93);
+}
+
+.calc-gold{
+background:#b48b24!important;
+color:#050505!important;
+border-color:#e0c35a!important;
+}
+
+.zero{
+grid-column:span 2;
+border-radius:30px!important;
+text-align:left;
+padding-left:24px;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+z-index:300;
+background:rgba(0,0,0,.85);
+padding:10px;
+overflow:auto;
+}
+
+.modal.show{
+display:block;
+}
+
+.modal-box{
+max-width:850px;
+margin:auto;
+background:white;
+color:#111;
+padding:20px;
+border-radius:7px;
+}
+
+.modal-box table{
+min-width:0;
+}
+
+.modal-box th{
+background:#eee;
+color:#111;
+}
+
+.modal-box td,
+.modal-box th{
+border:1px solid #aaa;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+.header{
+display:block;
+}
+
+.logo{
+text-align:center;
+margin-bottom:8px;
+}
+
+nav{
+justify-content:flex-start;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.full{
+grid-column:auto;
+}
+
+.hero h1{
+font-size:23px;
+}
+
+.card{
+padding:11px;
+}
+
+}
+
+
+/* =========================
+   PRINT
+========================= */
+
+#printArea{
+display:none;
+}
+
+@media print{
+
+body *{
+visibility:hidden!important;
+}
+
+#printArea,
+#printArea *{
+visibility:visible!important;
+}
+
+#printArea{
+display:block;
+position:absolute;
+left:0;
+top:0;
+width:100%;
+}
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="header">
+
+<div class="logo">
+✦ AA BILLING SYSTEM ✦
+</div>
+
+<nav>
+
+<button onclick="show('dashboard')">
+Dashboard
+</button>
+
+<button onclick="show('create')">
+Create Bill
+</button>
+
+<button onclick="show('invoices')">
+Invoices
+</button>
+
+<button onclick="show('calculator')">
+Calculator
+</button>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+<div class="hero">
+
+<h1>AA BILLING SYSTEM</h1>
+
+<p>
+Professional • Simple • Fast Billing
+</p>
+
+</div>
+
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-title">Invoices</div>
+<div class="stat-value" id="count">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Billed</div>
+<div class="stat-value" id="billed">0.00</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Paid</div>
+<div class="stat-value" id="paidTotal">0.00</div>
+</div>
+
+<div class="stat">
+<div class="stat-title">Pending</div>
+<div class="stat-value" id="pendingTotal">0.00</div>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Quick Actions</h2>
+
+<div class="actions">
+
+<button class="btn gold"
+onclick="show('create')">
++ New Invoice
+</button>
+
+<button class="btn dark"
+onclick="show('invoices')">
+View Invoices
+</button>
+
+<button class="btn dark"
+onclick="show('calculator')">
+Calculator
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CREATE BILL -->
+
+<section id="create" class="page">
+
+<div class="card">
+
+<h2>Bill Information</h2>
+
+<div class="grid">
+
+<div>
+
+<label>Invoice Number</label>
+
+<input id="invoiceNo" readonly>
+
+</div>
+
+
+<div>
+
+<label>Date</label>
+
+<input id="billDate" type="date">
+
+</div>
+
+
+<div class="full">
+
+<label>
+Bill To — Company / School / Brand / Person
+</label>
+
+<input
+id="billTo"
+placeholder="Enter who has to pay the bill"
+>
+
+</div>
+
+
+<div>
+
+<label>Phone / Contact</label>
+
+<input id="phone">
+
+</div>
+
+
+<div>
+
+<label>Address</label>
+
+<input id="address">
+
+</div>
+
+
+<div class="full">
+
+<label>Notes</label>
+
+<textarea
+id="notes"
+placeholder="Optional notes..."
+></textarea>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Items / Services</h2>
+
+<div class="wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Sr.</th>
+<th>Name / Description</th>
+<th>Quantity</th>
+<th>Price</th>
+<th>Amount</th>
+<th>×</th>
+</tr>
+
+</thead>
+
+<tbody id="items"></tbody>
+
+</table>
+
+</div>
+
+<button class="add" onclick="addItem()">
++ Add Item
+</button>
+
+
+<div class="total">
+Total Amount:
+<span id="total">0.00</span>
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Payment</h2>
+
+<div class="grid">
+
+<div>
+
+<label>Status</label>
+
+<select id="paymentStatus"
+onchange="paymentUpdate()">
+
+<option value="unpaid">
+Unpaid
+</option>
+
+<option value="partial">
+Some Amount Paid / Pending
+</option>
+
+<option value="paid">
+Paid
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Amount Paid</label>
+
+<input
+id="amountPaid"
+type="number"
+min="0"
+value="0"
+oninput="paymentUpdate()"
+>
+
+</div>
+
+</div>
+
+
+<div class="payment">
+
+<div class="payment-line">
+
+<span>Total</span>
+
+<b id="payTotal">
+0.00
+</b>
+
+</div>
+
+
+<div class="payment-line">
+
+<span class="paid">
+Paid
+</span>
+
+<b class="paid" id="payPaid">
+0.00
+</b>
+
+</div>
+
+
+<div class="payment-line">
+
+<span class="pending">
+Pending
+</span>
+
+<b class="pending" id="payPending">
+0.00
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>Authorized Signature</h2>
+
+<div class="signature">
+
+<canvas id="signature"></canvas>
+
+</div>
+
+<div class="actions">
+
+<button class="btn dark"
+onclick="clearSignature()">
+Clear Signature
+</button>
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button class="btn gold"
+onclick="saveInvoice()">
+Save Invoice
+</button>
+
+<button class="btn dark"
+onclick="resetForm()">
+Clear Form
+</button>
+
+</div>
+
+</section>
+
+
+<!-- INVOICES -->
+
+<section id="invoices" class="page">
+
+<div class="card">
+
+<h2>Saved Invoices</h2>
+
+<div class="search">
+
+<input
+id="search"
+placeholder="Search company, school, brand, person or invoice..."
+oninput="renderInvoices()"
+>
+
+<button class="btn gold"
+onclick="renderInvoices()">
+Search
+</button>
+
+</div>
+
+
+<div id="invoiceList"></div>
+
+</div>
+
+</section>
+
+
+<!-- CALCULATOR -->
+
+<section id="calculator" class="page">
+
+<div class="card">
+
+<h2>Digital Calculator</h2>
+
+<div class="calculator">
+
+<div class="display" id="display">
+0
+</div>
+
+
+<div class="calc-grid">
+
+<button onclick="clearCalc()">
+AC
+</button>
+
+<button onclick="deleteCalc()">
+⌫
+</button>
+
+<button onclick="percentCalc()">
+%
+</button>
+
+<button class="calc-gold"
+onclick="operator('/')">
+÷
+</button>
+
+
+<button onclick="numberCalc('7')">7</button>
+<button onclick="numberCalc('8')">8</button>
+<button onclick="numberCalc('9')">9</button>
+
+<button class="calc-gold"
+onclick="operator('*')">
+×
+</button>
+
+
+<button onclick="numberCalc('4')">4</button>
+<button onclick="numberCalc('5')">5</button>
+<button onclick="numberCalc('6')">6</button>
+
+<button class="calc-gold"
+onclick="operator('-')">
+−
+</button>
+
+
+<button onclick="numberCalc('1')">1</button>
+<button onclick="numberCalc('2')">2</button>
+<button onclick="numberCalc('3')">3</button>
+
+<button class="calc-gold"
+onclick="operator('+')">
++
+</button>
+
+
+<button class="zero"
+onclick="numberCalc('0')">
+0
+</button>
+
+<button onclick="numberCalc('.')">
+.
+</button>
+
+<button class="calc-gold"
+onclick="calculate()">
+=
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<!-- VIEW MODAL -->
+
+<div id="modal" class="modal">
+
+<div class="modal-box">
+
+<div id="invoiceView"></div>
+
+<div class="actions">
+
+<button class="btn gold"
+onclick="printInvoice()">
+Print / Save PDF
+</button>
+
+<button class="btn dark"
+onclick="closeModal()">
+Close
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div id="printArea"></div>
+
+
+<script>
+
+/* =========================
+   STORAGE
+========================= */
+
+const KEY="AA_BILLING_SYSTEM_DATA";
+
+let invoices=[];
+
+try{
+invoices=JSON.parse(
+localStorage.getItem(KEY)||"[]"
+);
+}catch(e){
+invoices=[];
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function show(id){
+
+document.querySelectorAll(".page")
+.forEach(function(x){
+x.classList.remove("active");
+});
+
+document.getElementById(id)
+.classList.add("active");
+
+if(id==="dashboard"){
+dashboard();
+}
+
+if(id==="invoices"){
+renderInvoices();
+}
+
+window.scrollTo(0,0);
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function today(){
+
+let d=new Date();
+
+return d.getFullYear()+"-"+
+String(d.getMonth()+1).padStart(2,"0")+"-"+
+String(d.getDate()).padStart(2,"0");
+
+}
+
+
+function readableDate(value){
+
+if(!value)return "";
+
+return new Date(
+value+"T00:00:00"
+).toLocaleDateString(
+undefined,
+{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+}
+);
+
+}
+
+
+/* =========================
+   INVOICE NUMBER
+========================= */
+
+function invoiceNumber(){
+
+let max=0;
+
+invoices.forEach(function(x){
+
+let m=String(x.no)
+.match(/AA-(\d+)/);
+
+if(m){
+max=Math.max(max,Number(m[1]));
+}
+
+});
+
+return "AA-"+String(max+1).padStart(5,"0");
+
+}
+
+
+/* =========================
+   ITEMS
+========================= */
+
+function addItem(){
+
+let row=
+document.createElement("tr");
+
+row.innerHTML=
+'<td class="sr"></td>'+
+'<td><input class="desc" placeholder="Item / Service"></td>'+
+'<td><input class="qty" type="number" min="0" value="1" oninput="calculateTotal()"></td>'+
+'<td><input class="price" type="number" min="0" value="0" oninput="calculateTotal()"></td>'+
+'<td class="amount">0.00</td>'+
+'<td><button class="btn red" onclick="removeItem(this)">×</button></td>';
+
+document.getElementById("items")
+.appendChild(row);
+
+serial();
+calculateTotal();
+
+}
+
+
+function removeItem(button){
+
+button.closest("tr").remove();
+
+serial();
+calculateTotal();
+
+}
+
+
+function serial(){
+
+document.querySelectorAll("#items tr")
+.forEach(function(row,i){
+
+row.querySelector(".sr")
+.textContent=i+1;
+
+});
+
+}
+
+
+function calculateTotal(){
+
+let total=0;
+
+document.querySelectorAll("#items tr")
+.forEach(function(row){
+
+let q=
+Number(row.querySelector(".qty").value)||0;
+
+let p=
+Number(row.querySelector(".price").value)||0;
+
+let amount=q*p;
+
+row.querySelector(".amount")
+.textContent=amount.toFixed(2);
+
+total+=amount;
+
+});
+
+document.getElementById("total")
+.textContent=total.toFixed(2);
+
+paymentUpdate();
+
+}
+
+
+/* =========================
+   PAYMENT
+========================= */
+
+function paymentUpdate(){
+
+let total=
+Number(
+document.getElementById("total")
+.textContent
+)||0;
+
+let status=
+document.getElementById("paymentStatus")
+.value;
+
+let paid=
+Number(
+document.getElementById("amountPaid")
+.value
+)||0;
+
+
+if(status==="paid"){
+paid=total;
+}
+
+if(status==="unpaid"){
+paid=0;
+}
+
+paid=Math.min(paid,total);
+
+document.getElementById("amountPaid")
+.value=paid;
+
+document.getElementById("payTotal")
+.textContent=total.toFixed(2);
+
+document.getElementById("payPaid")
+.textContent=paid.toFixed(2);
+
+document.getElementById("payPending")
+.textContent=
+(total-paid).toFixed(2);
+
+}
+
+
+/* =========================
+   SIGNATURE
+========================= */
+
+let canvas=
+document.getElementById("signature");
+
+let ctx=
+canvas.getContext("2d");
+
+let drawing=false;
+
+
+function resizeCanvas(){
+
+let width=canvas.clientWidth;
+
+let ratio=window.devicePixelRatio||1;
+
+canvas.width=width*ratio;
+
+canvas.height=110*ratio;
+
+ctx.setTransform(
+ratio,
+0,
+0,
+ratio,
+0,
+0
+);
+
+ctx.lineWidth=2;
+ctx.lineCap="round";
+ctx.strokeStyle="#111";
+
+}
+
+
+resizeCanvas();
+
+window.addEventListener(
+"resize",
+resizeCanvas
+);
+
+
+function pointerPosition(e){
+
+let r=
+canvas.getBoundingClientRect();
+
+return{
+x:e.clientX-r.left,
+y:e.clientY-r.top
+};
+
+}
+
+
+canvas.addEventListener(
+"pointerdown",
+function(e){
+
+drawing=true;
+
+let p=pointerPosition(e);
+
+ctx.beginPath();
+
+ctx.moveTo(p.x,p.y);
+
+}
+);
+
+
+canvas.addEventListener(
+"pointermove",
+function(e){
+
+if(!drawing)return;
+
+let p=pointerPosition(e);
+
+ctx.lineTo(p.x,p.y);
+
+ctx.stroke();
+
+}
+);
+
+
+window.addEventListener(
+"pointerup",
+function(){
+
+drawing=false;
+
+}
+);
+
+
+function clearSignature(){
+
+ctx.clearRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+function saveInvoice(){
+
+let to=
+document.getElementById("billTo")
+.value.trim();
+
+if(!to){
+
+alert(
+"Please enter the Bill To name."
+);
+
+return;
+
+}
+
+
+let items=[];
+
+
+document.querySelectorAll("#items tr")
+.forEach(function(row){
+
+let d=
+row.querySelector(".desc")
+.value.trim();
+
+if(d){
+
+let q=
+Number(row.querySelector(".qty").value)||0;
+
+let p=
+Number(row.querySelector(".price").value)||0;
+
+items.push({
+description:d,
+quantity:q,
+price:p,
+amount:q*p
+});
+
+}
+
+});
+
+
+if(!items.length){
+
+alert("Please add at least one item.");
+
+return;
+
+}
+
+
+let total=
+items.reduce(
+function(sum,item){
+return sum+item.amount;
+},
+0
+);
+
+
+let paid=
+Number(
+document.getElementById("amountPaid")
+.value
+)||0;
+
+
+let status=
+paid<=0
+?"unpaid"
+:paid>=total
+?"paid"
+:"partial";
+
+
+let invoice={
+
+id:Date.now(),
+
+no:
+document.getElementById("invoiceNo")
+.value,
+
+date:
+document.getElementById("billDate")
+.value,
+
+to:to,
+
+phone:
+document.getElementById("phone")
+.value,
+
+address:
+document.getElementById("address")
+.value,
+
+notes:
+document.getElementById("notes")
+.value,
+
+items:items,
+
+total:total,
+
+paid:paid,
+
+pending:total-paid,
+
+status:status,
+
+signature:
+canvas.toDataURL("image/png")
+
+};
+
+
+invoices.push(invoice);
+
+localStorage.setItem(
+  KEY,
+  JSON.stringify(invoices)
+);
+
+alert(
+  "Invoice " + invoice.no +
+  " saved successfully!"
+);
+
+resetForm();
+
+show("invoices");
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+function resetForm(){
+
+  document.getElementById("invoiceNo").value =
+    invoiceNumber();
+
+  document.getElementById("billDate").value =
+    today();
+
+  document.getElementById("billTo").value = "";
+
+  document.getElementById("phone").value = "";
+
+  document.getElementById("address").value = "";
+
+  document.getElementById("notes").value = "";
+
+  document.getElementById("paymentStatus").value =
+    "unpaid";
+
+  document.getElementById("amountPaid").value =
+    "0";
+
+  document.getElementById("items").innerHTML = "";
+
+  addItem();
+
+  clearSignature();
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function dashboard(){
+
+  let billed = 0;
+  let paid = 0;
+  let pending = 0;
+
+  invoices.forEach(function(x){
+
+    billed += Number(x.total) || 0;
+
+    paid += Number(x.paid) || 0;
+
+    pending += Number(x.pending) || 0;
+
+  });
+
+  document.getElementById("count").textContent =
+    invoices.length;
+
+  document.getElementById("billed").textContent =
+    billed.toFixed(2);
+
+  document.getElementById("paidTotal").textContent =
+    paid.toFixed(2);
+
+  document.getElementById("pendingTotal").textContent =
+    pending.toFixed(2);
+
+}
+
+
+/* =========================
+   SEARCH / INVOICES
+========================= */
+
+function renderInvoices(){
+
+  let box =
+    document.getElementById("invoiceList");
+
+  let query =
+    document.getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
+
+  let result =
+    invoices
+    .filter(function(x){
+
+      return (
+        String(x.to)
+        .toLowerCase()
+        .includes(query)
+
+        ||
+
+        String(x.no)
+        .toLowerCase()
+        .includes(query)
+      );
+
+    })
+    .reverse();
+
+  box.innerHTML = "";
+
+  if(!result.length){
+
+    box.innerHTML =
+      '<div class="empty">No invoices found.</div>';
+
+    return;
+  }
+
+  result.forEach(function(x){
+
+    let div =
+      document.createElement("div");
+
+    div.className = "invoice";
+
+    let statusClass =
+      x.status === "paid"
+      ? "paid"
+      : x.status === "partial"
+      ? "partial"
+      : "unpaid";
+
+    div.innerHTML =
+
+      '<div class="invoice-name">' +
+      escapeHTML(x.to) +
+      '</div>' +
+
+      '<div class="info">' +
+      escapeHTML(x.no) +
+      ' • ' +
+      escapeHTML(readableDate(x.date)) +
+      '</div>' +
+
+      '<div class="info">' +
+      'Total: ' +
+      Number(x.total).toFixed(2) +
+
+      ' • Paid: ' +
+      Number(x.paid).toFixed(2) +
+
+      ' • Pending: ' +
+      Number(x.pending).toFixed(2) +
+
+      '</div>' +
+
+      '<span class="badge ' +
+      statusClass +
+      '">' +
+      x.status.toUpperCase() +
+      '</span>' +
+
+      '<div class="actions">' +
+
+      '<button class="btn gold" ' +
+      'onclick="viewInvoice(' +
+      x.id +
+      ')">' +
+
+      'View' +
+
+      '</button>' +
+
+      '<button class="btn red" ' +
+      'onclick="deleteInvoice(' +
+      x.id +
+      ')">' +
+
+      'Delete' +
+
+      '</button>' +
+
+      '</div>';
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+/* =========================
+   VIEW INVOICE
+========================= */
+
+function viewInvoice(id){
+
+  let x =
+    invoices.find(function(i){
+
+      return i.id === id;
+
+    });
+
+  if(!x)return;
+
+  let rows = "";
+
+  x.items.forEach(function(item,i){
+
+    rows +=
+
+      "<tr>" +
+
+      "<td>" +
+      (i + 1) +
+      "</td>" +
+
+      "<td>" +
+      escapeHTML(item.description) +
+      "</td>" +
+
+      "<td>" +
+      item.quantity +
+      "</td>" +
+
+      "<td>" +
+      Number(item.price).toFixed(2) +
+      "</td>" +
+
+      "<td>" +
+      Number(item.amount).toFixed(2) +
+      "</td>" +
+
+      "</tr>";
+
+  });
+
+
+  document.getElementById("invoiceView")
+  .innerHTML =
+
+    "<h1>AA BILLING SYSTEM</h1>" +
+
+    "<p>" +
+
+    "<b>Invoice:</b> " +
+    escapeHTML(x.no) +
+
+    "<br>" +
+
+    "<b>Date:</b> " +
+    escapeHTML(
+      readableDate(x.date)
+    ) +
+
+    "</p>" +
+
+    "<hr>" +
+
+    "<h2>BILL TO</h2>" +
+
+    "<p>" +
+
+    "<b>" +
+    escapeHTML(x.to) +
+    "</b>" +
+
+    "<br>" +
+
+    escapeHTML(x.phone) +
+
+    "<br>" +
+
+    escapeHTML(x.address) +
+
+    "</p>" +
+
+    "<table>" +
+
+    "<tr>" +
+
+    "<th>Sr.</th>" +
+
+    "<th>Description</th>" +
+
+    "<th>Quantity</th>" +
+
+    "<th>Price</th>" +
+
+    "<th>Amount</th>" +
+
+    "</tr>" +
+
+    rows +
+
+    "</table>" +
+
+    "<h2 style='text-align:right'>" +
+
+    "Total: " +
+
+    Number(x.total).toFixed(2) +
+
+    "</h2>" +
+
+    "<p style='text-align:right'>" +
+
+    "<b>Paid:</b> " +
+
+    Number(x.paid).toFixed(2) +
+
+    "<br>" +
+
+    "<b>Pending:</b> " +
+
+    Number(x.pending).toFixed(2) +
+
+    "<br>" +
+
+    "<b>Status:</b> " +
+
+    x.status.toUpperCase() +
+
+    "</p>" +
+
+    "<p>" +
+
+    escapeHTML(x.notes) +
+
+    "</p>" +
+
+    "<br>" +
+
+    "<img src='" +
+
+    x.signature +
+
+    "' " +
+
+    "style='width:220px;height:90px;object-fit:contain'>" +
+
+    "<br>Authorized Signature";
+
+
+  document.getElementById("modal")
+  .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById("modal")
+  .classList.remove("show");
+
+}
+
+
+/* =========================
+   PRINT
+========================= */
+
+function printInvoice(){
+
+  document.getElementById("printArea")
+  .innerHTML =
+
+    document.getElementById("invoiceView")
+    .innerHTML;
+
+  window.print();
+
+}
+
+
+/* =========================
+   DELETE INVOICE
+========================= */
+
+function deleteInvoice(id){
+
+  if(
+    !confirm(
+      "Are you sure you want to delete this invoice?"
+    )
+  ){
+
+    return;
+
+  }
+
+
+  invoices =
+    invoices.filter(function(x){
+
+      return x.id !== id;
+
+    });
+
+
+  localStorage.setItem(
+    KEY,
+    JSON.stringify(invoices)
+  );
+
+
+  renderInvoices();
+
+  dashboard();
+
+}
+
+
+/* =========================
+   CALCULATOR
+========================= */
+
+let current = "";
+
+let previous = "";
+
+let operatorValue = "";
+
+
+/* NUMBER */
+
+function numberCalc(n){
+
+  if(
+    n === "." &&
+    current.includes(".")
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    current === "0" &&
+    n !== "."
+  ){
+
+    current = "";
+
+  }
+
+
+  current += n;
+
+  displayCalc();
+
+}
+
+
+/* OPERATOR */
+
+function operator(o){
+
+  if(!current){
+
+    return;
+
+  }
+
+
+  if(previous){
+
+    calculate();
+
+  }
+
+
+  previous = current;
+
+  current = "";
+
+  operatorValue = o;
+
+}
+
+
+/* CALCULATE */
+
+function calculate(){
+
+  if(
+    !previous ||
+    !current
+  ){
+
+    return;
+
+  }
+
+
+  let a = Number(previous);
+
+  let b = Number(current);
+
+  let result;
+
+
+  if(operatorValue === "+"){
+
+    result = a + b;
+
+  }
+
+
+  if(operatorValue === "-"){
+
+    result = a - b;
+
+  }
+
+
+  if(operatorValue === "*"){
+
+    result = a * b;
+
+  }
+
+
+  if(operatorValue === "/"){
+
+    if(b === 0){
+
+      current = "Error";
+
+      previous = "";
+
+      operatorValue = "";
+
+      displayCalc();
+
+      return;
+
+    }
+
+
+    result = a / b;
+
+  }
+
+
+  result =
+    Math.round(
+      result * 100000000
+    ) / 100000000;
+
+
+  current = String(result);
+
+  previous = "";
+
+  operatorValue = "";
+
+  displayCalc();
+
+}
+
+
+/* CLEAR */
+
+function clearCalc(){
+
+  current = "";
+
+  previous = "";
+
+  operatorValue = "";
+
+  displayCalc();
+
+}
+
+
+/* DELETE */
+
+function deleteCalc(){
+
+  current =
+    current.slice(0,-1) || "0";
+
+  displayCalc();
+
+}
+
+
+/* PERCENT */
+
+function percentCalc(){
+
+  if(current){
+
+    current =
+      String(
+        Number(current) / 100
+      );
+
+  }
+
+  displayCalc();
+
+}
+
+
+/* DISPLAY */
+
+function displayCalc(){
+
+  document.getElementById("display")
+  .textContent =
+    current || "0";
+
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(value){
+
+  return String(value || "")
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+document.getElementById("invoiceNo")
+.value =
+invoiceNumber();
+
+
+document.getElementById("billDate")
+.value =
+today();
+
+
+addItem();
+
+dashboard();
+
+</script>
+
+</body>
+
+</html>
